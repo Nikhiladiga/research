@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %} | Equipment Requests {% endblock %}
+{% block content %}
+
+<style>
+
+</style>
+
+<div class="container mb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Your Requests</h2>
+          {% if requests %}
+          <div class="card mb-2">
+            <div class="card-body">
+              {% for request in requests %}
+              <p>
+                <ul class="list-group">
+                        <li class="list-group-item"><strong>Equipment Name : </strong> {{request.eqpname}} <br></li>
+                        <li class="list-group-item"><strong>From : </strong>{{request.fromDate}} <br></li>
+                        <li class="list-group-item"><strong>To : </strong>{{request.toDate}} <br></li>
+                        {% if request.request_status is True %}
+                        <li class="list-group-item"><strong>Request Status : </strong><span class="badge badge-pill badge-success">Approved &#10004;</span></li>
+                        {%else%}
+                        <li class="list-group-item"><strong>Request Status : </strong><span class="badge badge-pill badge-warning">Pending &#10006;</span></li>
+                        {%endif%}
+        </ul>
+              </p>
+              {% endfor %}
+               </div>
+            </div>
+            {% else %}
+            <p>You have not made any requests</p>
+          {% endif %}
+        </div>
+      </div>
+</div>
+
+<nav aria-label="Page navigation example">
+    {% if equipmentrequests.has_other_pages %}
+    <ul class="pagination justify-content-center">
+      {% if equipmentrequests.has_previous %}
+        <li class="page-item">
+          <a href="?page={{equipmentrequests.previous_page_number}}" class="page-link">&laquo;
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link">&laquo;</a>
+        </li>
+      {% endif %}
+      {% for i in equipmentrequests.paginator.page_range %}
+      {% if equipmentrequests.number == i%}
+        <li class="page-item active">
+          <a class="page-link">{{i}}</a>
+        </li>
+      {% else %}
+      <li class="page-item">
+        <a href="?page={{i}}" class="page-link">{{i}}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+      {% if equipmentrequests.has_next %}
+        <li class="page-item">
+          <a href="?page={{equipmentrequests.next_page_number}}" class="page-link">&raquo;
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link">&raquo;</a>
+        </li>
+      {% endif %}
+    </ul>
+    {% endif %}
+  </nav>
+</div>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends 'base.html'%}
+{% block title %}|Request Equipment{% endblock %}
+ {%block content %}
+ {% include 'partials/_alerts.html' %}
+
+<div class="container mb-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <span class="anchor" id="formRegister"></span>
+      <form method="POST" action="{% url 'request' %}">
+        {% csrf_token %} {% if user.is_authenticated %}
+        <input type="hidden" name="user_id" value="{{ user.id }}" />
+        {% else %}
+        <input type="hidden" name="user_id" value="0" />
+        {% endif %}
+        <div class="card card-outline-secondary">
+          <div class="card-header">
+            <h3 class="mb-0">Request Equipment</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="inputName">Name</label>
+              <input
+                class="form-control"
+                id="inputName"
+                placeholder="Name"
+                type="text"
+                name="name"
+                {%
+                if
+                user.is_authenticated
+                %}
+                value="{{ user.first_name }} {{ user.last_name }}"
+                {%
+                endif
+                %}
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputdept">Department</label>
+              <select
+                class="custom-select"
+                id="inputGroupSelect01"
+                name="department"
+              >
+                <option selected>Choose...</option>
+                <option value="anatomy">Anatomy</option>
+                <option value="physiology">Physiology</option>
+                <option value="biochemistry">Biochemistry</option>
+                <option value="general medicine">General Medicine</option>
+                <option value="general surgerys">General Surgery</option>
+                <option value="orthopaedics">Orthopaedics</option>
+                <option value="paediatrics">Paediatrics</option>
+                <option value="obstetrics & gynaecology"
+                  >Obstetrics & Gynaecology</option
+                >
+                <option value="ophthalmology">Ophthalmology</option>
+                <option value="otorhinolaryngology">Otorhinolaryngology</option>
+                <option value="dermatology">Dermatology</option>
+                <option value="anaesthesiology">Anaesthesiology</option>
+                <option value="psychiatry">Psychiatry</option>
+                <option value="radio diagnosis & imaging"
+                  >Radio diagnosis & Imaging</option
+                >
+                <option value="community medicine">Community Medicine</option>
+                <option value="pulmonary medicine">Pulmonary Medicine</option>
+                <option value="urology">Urology</option>
+                <option value="nephrology">Nephrology</option>
+                <option value="neuroscience">Neuroscience</option>
+                <option value="gastroenterology">Gastroenterology</option>
+                <option value="cardiology">Cardiology</option>
+                <option value="ctvs">CTVS</option>
+                <option value="endocrinology">Endocrinology</option>
+                <option value="oncology">Oncology</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputdesignation">Designation</label>
+              <input
+                class="form-control"
+                id="inputdesignation"
+                placeholder="Designation"
+                type="text"
+                name="designation"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="equipname">Equipment Name</label>
+              <input
+                class="form-control"
+                id="equipname"
+                placeholder="Equipment Name"
+                required
+                type="text"
+                name="eqpname"
+              />
+            </div>
+            <div class="form-group">
+              <label for="fromDate">From:</label>
+              <input
+                class="form-control"
+                id="fromDate"
+                placeholder="From"
+                required
+                type="date"
+                name="fromDate"
+              />
+            </div>
+            <div class="form-group">
+              <label for="toDate">To:</label>
+              <input
+                class="form-control"
+                id="toDate"
+                placeholder="To"
+                required
+                type="date"
+                name="toDate"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                class="form-control"
+                rows="5"
+                id="comment"
+                placeholder="Message"
+                name="message"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success btn-lg btn-block" type="submit">
+                Submit Request
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- /form card register -->
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
